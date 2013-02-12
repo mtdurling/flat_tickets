@@ -1,6 +1,8 @@
 class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
+  before_filter :authenicate
+
   def index
     @tickets = Ticket.all
 
@@ -80,4 +82,13 @@ class TicketsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  protected
+
+    def authenticate
+      authenticate_or_request_with_http_basic do |username, password|
+        username == "malcolm" && password == "durling"
+      end
+    end
+
 end
